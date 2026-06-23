@@ -11,9 +11,13 @@ exports.formulario = async(req, res) => {
 exports.consultar = async (req, res) => {
     try {
         const clientes = await Cliente.find();
-        res.json(clientes);
+        console.log("CLIENTES:", clientes);
+
+        res.render('pages/index2', { clientes });
+
     } catch (error) {
-        res.status(500).json(error);
+        console.log(error);
+        res.render('pages/error', { error: error.message });
     }
 };
 
@@ -32,25 +36,30 @@ exports.consultarId = async (req, res) => {
 
 
 exports.registrar = async (req, res) => {
-    try{
-        let clienteNuevo = {
+    try {
+
+        console.log("BODY:", req.body);
+
+        const clienteNuevo = {
             nombre: req.body.nombre,
             email: req.body.email,
             telefono: req.body.telefono
-        }
+        };
 
-        const clientes = await Cliente.insertOne(clienteNuevo);
-        if (clientes){
-            res.render('pages/registrarCliente', {mensaje: 'Cliente registrado exitosamente'});
-        }else{
-            res.render('pages/registrarCliente', {mensaje: 'Error al registrar el cliente'});
-        }
-    } catch (error){
-         return res.render('pages/registrarCliente', {
-            mensaje: 'Error del servidor' });
-    }  
-}
+        const cliente = await Cliente.create(clienteNuevo);
 
+        console.log("GUARDADO:", cliente);
+
+        return res.redirect('/api/v1/clientes');
+
+    } catch (error) {
+        console.log("ERROR AL GUARDAR:", error.message);
+
+        return res.render('pages/registrarCliente', {
+            mensaje: error.message
+        });
+    }
+};
 
 exports.actualizar = async (req, res) => {
     try {

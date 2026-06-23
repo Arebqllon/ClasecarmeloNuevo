@@ -2,12 +2,51 @@ const Producto = require('../models/producto.model');
 
 exports.consultar = async (req, res) => {
     try {
+
         const productos = await Producto.find();
-        res.json(productos);
+
+        return res.render('pages/indexP', {
+            productos: productos
+        });
+
     } catch (error) {
-        res.status(500).json(error);
+
+        return res.render('pages/error', {
+            error: error.message
+        });
     }
 };
+exports.registrar = async (req, res) => {
+    try {
+
+        console.log("BODY:", req.body);
+
+        const productoNuevo = {
+            nombre: req.body.nombre,
+            precio: req.body.precio,
+            stock: req.body.stock
+        };
+
+        const producto = await Producto.create(productoNuevo);
+
+        console.log("GUARDADO:", producto);
+
+        return res.redirect('/api/v1/productos');
+
+    } catch (error) {
+
+        console.log("ERROR AL GUARDAR:", error.message);
+
+        return res.render('pages/registrarProducto', {
+            mensaje: error.message
+        });
+    }
+};
+
+
+exports.formularioP = async(req, res) => {
+    res.render('pages/registrarProducto')
+}
 
 exports.consultarId = async (req, res) => {
     try {
