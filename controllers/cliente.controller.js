@@ -30,15 +30,26 @@ exports.consultarId = async (req, res) => {
 };
 
 
+
 exports.registrar = async (req, res) => {
-    try {
-        const cliente = new Cliente(req.body);
-        await cliente.insertOne();
-        res.render('pages/registrarCliente');
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};
+    try{
+        let clienteNuevo = {
+            nombre: req.body.nombre,
+            email: req.body.email,
+            telefono: req.body.telefono
+        }
+
+        const clientes = await Cliente.insertOne(clienteNuevo);
+        if (clientes){
+            res.render('pages/registrarCliente', {mensaje: 'Cliente registrado exitosamente'});
+        }else{
+            res.render('pages/registrarCliente', {mensaje: 'Error al registrar el cliente'});
+        }
+    } catch (error){
+         return res.render('pages/registrarCliente', {
+            mensaje: 'Error del servidor' });
+    }  
+}
 
 
 exports.actualizar = async (req, res) => {

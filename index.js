@@ -3,23 +3,24 @@ require('dotenv').config();
 const express = require('express');
 const conectarDB = require('./config/connectiondb');
 
-
+const PORT = 8000;
 
 const clienteController = require('./controllers/cliente.controller');
 const servicioController = require('./controllers/servicio.controller');
 const productoController = require('./controllers/producto.controller');
 
 const app = express();
-const PORT = 8000;
 
+const enrutamiento = require('./router/enrutamiento.router')
 app.use(express.json());
 app.set('view engine', 'ejs');
+app.use('/api/v1',enrutamiento)
 
 // Conexión a MongoDB
 conectarDB();
 
 app.get('/cliente', function(req,res){
-   fetch('https://clasecarmelo-1.onrender.com/clientes')
+   fetch('https://clasecarmelonuevo.onrender.com')
    .then(response => response.json())
    .then(data => {
        res.render('pages/index2',
@@ -30,12 +31,6 @@ app.get('/cliente', function(req,res){
 
 app.get('/', clienteController.home)
 app.get('/formulario', clienteController.formulario)
-app.get('/clientes', clienteController.consultar);
-app.get('/clientes/:id', clienteController.consultarId);
-app.post('/clientes', clienteController.registrar);
-app.put('/clientes/:id', clienteController.actualizar)
-app.delete('/clientes/:id', clienteController.eliminar);
-
 
 app.get('/servicios', servicioController.consultar);
 app.get('/servicios/:id', servicioController.consultarId);
