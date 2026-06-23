@@ -11,7 +11,6 @@ const clienteSchema = new mongoose.Schema({
   telefono: { type: String,
     minLength : [10, 'Error, faltan digitos'],
     maxLength : [10, 'Error, muchos digitos'],
-    default: '000000000'
    }
 });
 

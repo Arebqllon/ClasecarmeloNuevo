@@ -1,6 +1,13 @@
 const Cliente = require('../models/cliente.model');
 
 
+exports.home = async(req, res) => {
+    res.render('pages/index')
+}
+exports.formulario = async(req, res) => {
+    res.render('pages/registrarCliente')
+}
+
 exports.consultar = async (req, res) => {
     try {
         const clientes = await Cliente.find();
@@ -9,6 +16,8 @@ exports.consultar = async (req, res) => {
         res.status(500).json(error);
     }
 };
+
+
 
 
 exports.consultarId = async (req, res) => {
@@ -21,11 +30,11 @@ exports.consultarId = async (req, res) => {
 };
 
 
-exports.crear = async (req, res) => {
+exports.registrar = async (req, res) => {
     try {
         const cliente = new Cliente(req.body);
-        await cliente.save();
-        res.json(cliente);
+        await cliente.insertOne();
+        res.render('pages/registrarCliente');
     } catch (error) {
         res.status(500).json(error);
     }

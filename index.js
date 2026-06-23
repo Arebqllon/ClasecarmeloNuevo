@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 // Conexión a MongoDB
 conectarDB();
 
-app.get('/saludar', function(req,res){
+app.get('/cliente', function(req,res){
    fetch('https://clasecarmelo-1.onrender.com/clientes')
    .then(response => response.json())
    .then(data => {
@@ -28,9 +28,11 @@ app.get('/saludar', function(req,res){
    });
 });
 
+app.get('/', clienteController.home)
+app.get('/formulario', clienteController.formulario)
 app.get('/clientes', clienteController.consultar);
 app.get('/clientes/:id', clienteController.consultarId);
-app.post('/clientes', clienteController.crear);
+app.post('/clientes', clienteController.registrar);
 app.put('/clientes/:id', clienteController.actualizar)
 app.delete('/clientes/:id', clienteController.eliminar);
 
