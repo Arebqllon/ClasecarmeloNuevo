@@ -45,14 +45,17 @@ app.get('/productos', function(req,res){
    });
 });
 
+app.get('/servicios', function(req,res){
+   fetch('https://clasecarmelonuevo.onrender.com')
+   .then(response => response.json())
+   .then(data => {
+       res.render('pages/indexS',
+           {clientes:data}
+       )
+   });
+});
+
 app.get('/', clienteController.home)
-
-
-app.get('/servicios', servicioController.consultar);
-app.get('/servicios/:id', servicioController.consultarId);
-app.post('/servicios', servicioController.crear);
-app.put('/servicios/:id', servicioController.actualizar);
-app.delete('/servicios/:id', servicioController.eliminar);
 
 
 
