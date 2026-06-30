@@ -69,7 +69,7 @@ exports.actualizar = async (req, res) => {
             { new: true }
         );
 
-        res.json(cliente);
+        res.redirect('/api/v1/clientes'); // o redirect
     } catch (error) {
         res.status(500).json(error);
     }

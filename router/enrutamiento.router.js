@@ -21,7 +21,7 @@ router.post('/productos', productoController.registrar);
 router.put('/productos/:id', productoController.actualizar);
 router.delete('/productos/:id', productoController.eliminar);
 
-router.get('/formularioP', servicioController.formularioS)
+router.get('/formularioS', servicioController.formularioS)
 router.get('/servicios', servicioController.consultar);
 router.get('/servicios/:id', servicioController.consultarId);
 router.post('/servicios', servicioController.registrar);

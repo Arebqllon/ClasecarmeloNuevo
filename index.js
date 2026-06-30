@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const conectarDB = require('./config/connectiondb');
+const methodOverride = require("method-override");
 
 
 
@@ -16,6 +17,7 @@ const app = express();
 
 const enrutamiento = require('./router/enrutamiento.router')
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 app.use(express.json());
 
 app.set('view engine', 'ejs');
