@@ -46,7 +46,7 @@ exports.registrar = async (req, res) => {
 };
 
 
-exports.formularioP = async(req, res) => {
+exports.formularioS = async(req, res) => {
     res.render('pages/registrarServicio')
 }
 
